@@ -161,13 +161,13 @@ export default function Account() {
                         <p>PostalCode : {item.postalCode}</p>
                         <button
                           onClick={() => handleUpdateAddress(item)}
-                          className="mt-5 mr-5 inline-block bg-black text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"
+                          className="mt-5 mr-5 inline-block bg-yellow-400 text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"
                         >
                           Update
                         </button>
                         <button
                           onClick={() => handleDelete(item._id)}
-                          className="mt-5  inline-block bg-black text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"
+                          className="mt-5  inline-block bg-red-500 text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"
                         >
                           {componentLevelLoader &&
                           componentLevelLoader.loading &&

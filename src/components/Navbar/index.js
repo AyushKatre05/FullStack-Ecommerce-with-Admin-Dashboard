@@ -7,6 +7,53 @@ import CommonModal from "../CommonModal";
 import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
 import CartModal from "../CartModal";
+import { LogInIcon, LogOutIcon, SettingsIcon, ShoppingCart, User, UserCog } from "lucide-react";
+import { useState } from "react";
+
+function Dropdown({ items, onItemSelect, label }) {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  const handleToggle = () => setIsOpen(!isOpen);
+  
+  return (
+    <div className="relative">
+      <button
+        onClick={handleToggle}
+        className="flex items-center p-2 text-gray-900 hover:bg-gray-200 rounded-md transition-colors duration-300"
+      >
+        {label}
+        <svg
+          className={`ml-2 w-4 h-4 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
+          <ul className="py-2">
+            {items.map(item => (
+              <li
+                key={item.id}
+                onClick={() => {
+                  onItemSelect(item.path);
+                  setIsOpen(false);
+                }}
+                className="cursor-pointer px-4 py-2 text-gray-900 hover:bg-gray-100 transition-colors duration-300"
+              >
+                {item.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
 
 function NavItems({ isModalView = false, isAdminView, router }) {
   return (
@@ -21,25 +68,19 @@ function NavItems({ isModalView = false, isAdminView, router }) {
           isModalView ? "border-none" : "border border-gray-100"
         }`}
       >
-        {isAdminView
-          ? adminNavOptions.map((item) => (
-              <li
-                className="cursor-pointer block py-2 pl-3 pr-4 text-gray-900 rounded md:p-0 hover:bg-gray-200 transition-colors duration-300"
-                key={item.id}
-                onClick={() => router.push(item.path)}
-              >
-                {item.label}
-              </li>
-            ))
-          : navOptions.map((item) => (
-              <li
-                className="cursor-pointer block py-2 pl-3 pr-4 text-gray-900 rounded md:p-0 hover:bg-gray-200 transition-colors duration-300"
-                key={item.id}
-                onClick={() => router.push(item.path)}
-              >
-                {item.label}
-              </li>
-            ))}
+        {isAdminView ? (
+          <Dropdown
+            items={adminNavOptions}
+            onItemSelect={(path) => router.push(path)}
+            label="Admin Menu"
+          />
+        ) : (
+          <Dropdown
+            items={navOptions}
+            onItemSelect={(path) => router.push(path)}
+            label="Products Menu"
+          />
+        )}
       </ul>
     </div>
   );
@@ -95,49 +136,49 @@ export default function Navbar() {
             {!isAdminView && isAuthUser ? (
               <Fragment>
                 <button
-                  className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white transition-transform transform hover:scale-105 duration-300"
+                  className="mt-1.5 inline-block px-5 py-3 text-xs font-medium uppercase tracking-wide transition-transform transform hover:scale-105 duration-300"
                   onClick={() => router.push("/account")}
                 >
-                  Account
+                  <SettingsIcon/>
                 </button>
                 <button
-                  className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white transition-transform transform hover:scale-105 duration-300"
+                  className="mt-1.5 inline-block px-5 py-3 text-xs font-medium uppercase tracking-wide transition-transform transform hover:scale-105 duration-300"
                   onClick={() => setShowCartModal(true)}
                 >
-                  Cart
+                  <ShoppingCart/>
                 </button>
               </Fragment>
             ) : null}
             {user?.role === "admin" ? (
               isAdminView ? (
                 <button
-                  className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white transition-transform transform hover:scale-105 duration-300"
+                  className="mt-1.5 inline-block text-blue-500 px-5 py-3 text-xs font-medium uppercase tracking-wide transition-transform transform hover:scale-105 duration-300"
                   onClick={() => router.push("/")}
                 >
-                  Client View
+                  <User/>
                 </button>
               ) : (
                 <button
                   onClick={() => router.push("/admin-view")}
-                  className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white transition-transform transform hover:scale-105 duration-300"
+                  className="mt-1.5 inline-block text-green-500 px-5 py-3 text-xs font-medium uppercase tracking-wide transition-transform transform hover:scale-105 duration-300"
                 >
-                  Admin View
+                  <UserCog/>
                 </button>
               )
             ) : null}
             {isAuthUser ? (
               <button
                 onClick={handleLogout}
-                className="mt-1.5 inline-block bg-red-500 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white transition-transform transform hover:scale-105 duration-300"
+                className="mt-1.5 inline-block px-5 py-3 text-xs font-medium uppercase tracking-wide text-red-500 transition-transform transform hover:scale-105 duration-300"
               >
-                Logout
+                <LogOutIcon/>
               </button>
             ) : (
               <button
                 onClick={() => router.push("/login")}
-                className="mt-1.5 inline-block bg-green-500 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white transition-transform transform hover:scale-105 duration-300"
+                className="mt-1.5 inline-block  px-5 py-3 text-xs font-medium uppercase tracking-wide text-green-500 transition-transform transform hover:scale-105 duration-300"
               >
-                Login
+                <LogInIcon/>
               </button>
             )}
             <button

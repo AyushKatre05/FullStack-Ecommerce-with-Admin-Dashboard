@@ -21,7 +21,7 @@ export const navOptions = [
   },
   {
     id: "listingKids",
-    label: "kids",
+    label: "Kids",
     path: "/product/listing/kids",
   },
 ];

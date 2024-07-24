@@ -210,7 +210,7 @@ export default function Home() {
             <div className="bg-white rounded-lg shadow-md p-6">
               <div className="relative w-full h-48 mb-4">
                 <img
-                  src="/blog3.avif"
+                  src="/blog3.jpg"
                   alt="Blog Post 3"
                   className="absolute inset-0 w-full h-full object-cover rounded-lg"
                 />
