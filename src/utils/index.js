@@ -190,12 +190,12 @@ export const AvailableSizes = [
 
 export const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: "ecommerce-c1cda.firebaseapp.com",
-  projectId: "ecommerce-c1cda",
-  storageBucket: "ecommerce-c1cda.appspot.com",
-  messagingSenderId: "89598977657",
   appId: process.env.FIREBASE_APP_ID,
-  measurementId: "G-6L604S1ZYF"
+  authDomain: "ecommerce-fullstack-18.firebaseapp.com",
+  projectId: "ecommerce-fullstack-18",
+  storageBucket: "ecommerce-fullstack-18.appspot.com",
+  messagingSenderId: "166895991948",
+  measurementId: "G-23PF4GWZC1"
 };
 
 export const firebaseStroageURL =
